@@ -1,11 +1,17 @@
 function Node(index){
     this.id=index;
     this.adjacent=[];
+    this.edges={};
     this.color="W";  
     this.parent=null;
     this.distance=null;
     this.start=null;
     this.end=null;
+};
+
+function Edge(to,weight){
+    this.to=to;
+    this.weight=weight;
 };
 
 var graph={
@@ -20,8 +26,9 @@ var graph={
         input.forEach(function(element,index,array) {
             node=this.get(index);
             element.forEach(function(element2,index2,array2) {
-                if(index!=index2 && element2==1){
+                if(index!=index2 && element2>=1){
                     node.adjacent.push(index2);
+                    node.edges[index2]=element2;
                 }
             }, this);
         }, this);
@@ -41,6 +48,7 @@ var graph={
         }, this);
     },
     nodes:[],
+    edges:[],
     get:function(id){
         return this.nodes.filter(node=>node.id==id)[0];
     },
@@ -75,6 +83,35 @@ var graph={
                 this.visit(element);
             }
         }, this);  
+    },
+    Djikstra:function(id){
+        this.reset();
+        var v=this.get(id);       
+        v.distance=0;
+        var Q=this.nodes.slice();
+        var S=[];
+        while(Q.length!=0){
+            var u=null;
+            var u_index=-1;
+            Q.forEach(function(element,index) {
+                    if(u==null || (element.distance!=null && element.distance<u.distance)){
+                        u=element;
+                        u_index=index;
+                    }
+            }, this);
+            Q.splice(u_index,1);
+            S.push(u);
+            u.adjacent.forEach(function(element){
+                w=this.get(element);
+                this.relax(u,w);
+            },this);
+        }     
+    },
+    relax:function(from,to){
+        if(to.distance==null || to.distance>from.distance+from.edges[to.id]){
+            to.distance=from.distance+from.edges[to.id];
+            to.parent=from.id;
+        }
     },
     visit:function(node){
         node.color="G";

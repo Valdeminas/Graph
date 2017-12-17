@@ -8,11 +8,15 @@
 [1,1,0,1],
 [1,1,1,0]]</textarea>
     <div>
-      <button onclick="graph.import(JSON.parse(document.getElementById('input').value));graph.BFS(document.getElementById('start').value);graph.results();">BFS</button>
-      <input id="start" type="number">
+      <button onclick="graph.import(JSON.parse(document.getElementById('input').value));graph.BFS(document.getElementById('startBFS').value);graph.results();">BFS</button>
+      <input id="startBFS" type="number">
       </div>
       <div>
       <button onclick="graph.import(JSON.parse(document.getElementById('input').value));graph.DFS();graph.results();">DFS</button>
+    </div>
+    <div>
+      <button onclick="graph.import(JSON.parse(document.getElementById('input').value));graph.Djikstra(document.getElementById('startDjikstra').value);graph.results();">Djikstra</button>
+      <input id="startDjikstra" type="number">
     </div>
     <div id="output"></div>
     <script src="graph.js"></script>   
