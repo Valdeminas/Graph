@@ -26,7 +26,7 @@ var graph={
         input.forEach(function(element,index,array) {
             node=this.get(index);
             element.forEach(function(element2,index2,array2) {
-                if(index!=index2 && element2>=1){
+                if(index!=index2 && element2<>1){
                     node.adjacent.push(index2);
                     node.edges[index2]=element2;
                 }
